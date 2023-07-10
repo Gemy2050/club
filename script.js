@@ -1,3 +1,8 @@
+window.onload = () => {
+  document.querySelector(".load").remove();
+  document.querySelector(".container").style.display = "block";
+}
+
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js';
 import { getFirestore, collection, query, where, getDocs,getDoc, setDoc, addDoc, doc,deleteDoc,onSnapshot,orderBy, limit,startAt,endAt } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js';
 
@@ -28,18 +33,9 @@ let delButton = document.querySelector(".delete")
 
 let hoursObj = new Object({});
 
-let id;
 
 let hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 let days = ["saturday", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday"]
-
-
-
-// getDoc(doc(db, "club", `${form.day.value}`)).then((e)=>{
-//   hoursObj = e.data().hours;
-//   console.log(hoursObj);
-// });
-
 
 
 
@@ -64,8 +60,6 @@ hours.forEach((hour) => {
 
 
 
-
-
 addButton.onclick = () => {
   popup.classList.add("active")
 }
@@ -86,12 +80,14 @@ delForm.onsubmit = (e) => {
   e.preventDefault();
 
   getDoc(doc(db, "club", `${delForm.day.value}`)).then((e)=>{
-
-    hoursObj = e.data().hours;
-    deleteData();
-
-    getResponse();
-    form.reset();
+    if(e.data().hours[delForm.hour.value] != '') {
+      hoursObj = e.data().hours;
+      deleteData();
+      getResponse();
+      delForm.reset();
+    } else {
+      swal.fire(`مش موجوده أصلا ياعم`,'',"error");
+    }
 });
 }
 
@@ -101,9 +97,9 @@ form.onsubmit = (e) => {
   e.preventDefault();
 
     getDoc(doc(db, "club", `${form.day.value}`)).then((e)=>{
-      hoursObj = e.data().hours;
-    
-    console.log("From Add Form");
+      if(e.data()) {
+        hoursObj = e.data().hours;
+      }
     
     addData();
 
@@ -124,7 +120,7 @@ function addData() {
 
   getResponse();
 
-  swal.fire(`Completed`,'',"success");
+  swal.fire(`تم`,'',"success");
   
   form.reset();
   popup.classList.remove("active");
@@ -142,11 +138,17 @@ function deleteData() {
 
   hoursObj = {};
 
-  getResponse();
-  swal.fire(`Deleted Successfully`,``,"success");
-  form.reset();
+  swal.fire(`تم المسح`,``,"success");
   document.querySelector(".popup-delete").classList.remove("active");
+
+  tds.forEach((td) => {
+    if(td.dataset.day == days.indexOf(delForm.day.value) && td.dataset.hour == delForm.hour.value) {
+      td.innerHTML = '';
+    }
+  })
+  
 }
+
 
 /* get all Docs */
 
@@ -157,16 +159,18 @@ async function getAllDocs(collectionName){
   let querySnapshot = await getDocs(q);
   let list = querySnapshot.docs.map(doc => doc.data());
 
+  localStorage.setItem("club", JSON.stringify(list))
+
   return list;
 };
 
 
 
+let tds = document.querySelectorAll("table tbody tr td");
 function getResponse() {
 
   getAllDocs("club").then((arr) => {
 
-    let tds = document.querySelectorAll("table tbody tr td");
 
     arr.forEach((el) => {
       tds.forEach((td) => {
@@ -179,13 +183,3 @@ function getResponse() {
 }
 
 getResponse();
-
-
-async function getCurrentDoc() {
-  let result;
-  await getDoc(doc(db, "club", `${form.day.value}`)).then((e)=>{
-      result = e.data().hours;
-    });
-    console.log("result", result);
-  return result;
-}
