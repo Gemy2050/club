@@ -80,13 +80,20 @@ delForm.onsubmit = (e) => {
   e.preventDefault();
 
   getDoc(doc(db, "club", `${delForm.day.value}`)).then((e)=>{
-    if(e.data().hours[delForm.hour.value] != '') {
+    if(![undefined, ''].includes(e.data().hours[delForm.hour.value])) {
       hoursObj = e.data().hours;
       deleteData();
       getResponse();
       delForm.reset();
     } else {
-      swal.fire(`مش موجوده أصلا ياعم`,'',"error");
+      // swal.fire(`مش موجوده أصلا ياعم`,'',"error", '1500');
+      swal.fire({
+        // icon: 'error',
+        title: `مش موجوده أصلا ياعم`,
+        imageUrl: './angry.jpg',
+        imageHeight: 180,
+        showCloseButton: true
+      })
     }
 });
 }
@@ -120,7 +127,13 @@ function addData() {
 
   getResponse();
 
-  swal.fire(`تم`,'',"success");
+  swal.fire({
+    icon: 'success',
+    title: 'تم',
+    showConfirmButton: false,
+    imageUrl: './logo.jpg',
+    timer: 1200,
+  })
   
   form.reset();
   popup.classList.remove("active");
@@ -138,7 +151,7 @@ function deleteData() {
 
   hoursObj = {};
 
-  swal.fire(`تم المسح`,``,"success");
+
   document.querySelector(".popup-delete").classList.remove("active");
 
   tds.forEach((td) => {
@@ -147,6 +160,12 @@ function deleteData() {
     }
   })
   
+  swal.fire({
+    title: `تم المسح`,
+    icon: 'success',
+    showConfirmButton: false,
+    timer: 1200,
+  })
 }
 
 
