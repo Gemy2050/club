@@ -46,6 +46,11 @@ table thead {
     border: 1px solid #DDD;
     padding: 8px 5px;
     min-width: 100px;
+    border-top: transparent;
+  }
+  th.active {
+    background-color: #0075ff;
+    color: white;
   }
   
   th {

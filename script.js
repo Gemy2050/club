@@ -37,7 +37,14 @@ let hoursObj = new Object({});
 let hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 let days = ["saturday", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday"]
 
-
+let today = new Date().getDay();
+document.querySelectorAll("thead th").forEach((el) => {
+  if(el.dataset.idx == today) {
+    console.log("Yes");
+    el.classList.add("active");
+  }
+  console.log(el.dataset.day, today);
+})
 
 
 tableBody.innerHTML = '';
@@ -86,12 +93,10 @@ delForm.onsubmit = (e) => {
       getResponse();
       delForm.reset();
     } else {
-      // swal.fire(`مش موجوده أصلا ياعم`,'',"error", '1500');
       swal.fire({
-        // icon: 'error',
         title: `مش موجوده أصلا ياعم`,
         imageUrl: './angry.jpg',
-        imageHeight: 180,
+        imageWidth: 180,
         showCloseButton: true
       })
     }
@@ -131,7 +136,6 @@ function addData() {
     icon: 'success',
     title: 'تم',
     showConfirmButton: false,
-    imageUrl: './logo.jpg',
     timer: 1200,
   })
   
