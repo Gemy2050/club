@@ -100,7 +100,9 @@ table thead {
   width: 100%;
   padding: 50px 20px;
 }
-.popup .close, .close-delete {
+.popup .close, 
+.close-delete, 
+.close-login { 
   position: absolute;
   top: 10px;
   right: 10px;
@@ -143,7 +145,7 @@ table thead {
   margin: auto;
   display: flex;
 }
-.container .buttons button{
+.container .buttons button , button.admin {
   background-color: #009688;
   margin-top: 20px;
   padding: 10px 20px;
@@ -161,7 +163,9 @@ table thead {
 .container .buttons .delete {
   background-color: #f31a1a;
 }
-
+button.admin {
+  margin: 12px;
+}
 
 
 /* Loading */

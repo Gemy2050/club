@@ -29,7 +29,9 @@ let popup = document.querySelector(".popup-add");
 let form = document.querySelector(".popup-add form");
 let delForm = document.querySelector(".popup-delete form");
 let tableBody = document.querySelector("table tbody");
-let delButton = document.querySelector(".delete")
+let delButton = document.querySelector(".delete");
+let adminButton = document.querySelector("button.admin")
+let loginButton = document.querySelector(".popup-login .login")
 
 let hoursObj = new Object({});
 
@@ -39,11 +41,8 @@ let days = ["saturday", "sunday", "monday", "tuesday", "wednesday", "thursday", 
 
 let today = new Date().getDay();
 document.querySelectorAll("thead th").forEach((el) => {
-  if(el.dataset.idx == today) {
-    console.log("Yes");
+  if(el.dataset.idx == today)
     el.classList.add("active");
-  }
-  console.log(el.dataset.day, today);
 })
 
 
@@ -73,11 +72,17 @@ addButton.onclick = () => {
 delButton.onclick = () => {
   document.querySelector(".popup-delete").classList.add("active")
 }
+adminButton.onclick = () => {
+  document.querySelector(".popup-login").classList.add("active")
+}
 
 document.querySelector(".popup .close").onclick = function() {
   this.parentElement.parentElement.classList.remove("active");
 }
 document.querySelector(".popup .close-delete").onclick = function() {
+  this.parentElement.parentElement.classList.remove("active");
+}
+document.querySelector(".popup .close-login").onclick = function() {
   this.parentElement.parentElement.classList.remove("active");
 }
 
@@ -206,3 +211,45 @@ function getResponse() {
 }
 
 getResponse();
+
+
+getDoc(doc(db, "admin", `admin`)).then((e)=>{
+
+
+let admin = e.data().admin;
+let password = e.data().password;
+
+let loginForm = document.querySelector(".popup-login form");
+
+loginForm.onsubmit = (e) => {
+  e.preventDefault();
+
+  if(loginForm.admin.value == admin && loginForm.password.value == password) {
+    localStorage.setItem("isAdmin", "true");
+    document.querySelector(".container .buttons").style.display='flex';
+    adminButton.style.display="none";
+    document.querySelector(".popup-login").classList.remove("active");
+    new swal({
+      text: "تم تسجيل الدخول",
+      icon: "success",
+      timer: 2500,
+
+    })
+  } else {
+    new swal({
+      text: "المستخدم غير موجود",
+      icon: "error"
+    })
+  }
+}
+
+});
+
+
+if(localStorage.getItem("isAdmin") == "true") {
+  document.querySelector(".container").style.display='flex';
+  adminButton.style.display="none";
+} else {
+  document.querySelector(".container .buttons").style.display='none';
+  adminButton.style.display="block";
+}

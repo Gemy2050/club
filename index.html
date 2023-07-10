@@ -21,7 +21,7 @@
         <button class="close-delete">x</button>
         <!-- <label for="day">Day</label> -->
         <form>
-          <select name="day" id="day">
+          <select name="day">
             <option value="saturday">السبت</option>
             <option value="sunday">الأحد</option>
             <option value="monday">الاثنين</option>
@@ -41,7 +41,7 @@
         <button class="close">x</button>
         <form>
           <!-- <label for="day">Day</label> -->
-          <select name="day" id="day">
+          <select name="day">
             <option value="saturday">السبت</option>
             <option value="sunday">الأحد</option>
             <option value="monday">الاثنين</option>
@@ -51,10 +51,20 @@
             <option value="friday">الجمعه</option>
           </select>
           <!-- <label for="hour">Hour</label> -->
-          <input type="number" id="hour" placeholder="الساعه" name="hour" min="1" max="12" required>
+          <input type="number"  placeholder="الساعه" name="hour" min="1" max="12" required>
           <!-- <label for="name">Name</label> -->
           <input type="text" id="name" placeholder="الاسم" name="name" required>
           <input type="submit" value="تسجيل" class="submit" required>
+        </form>
+      </div>
+    </div>
+    <div class="popup popup-login">
+      <div class="form-container">
+        <button class="close-login">x</button>
+        <form>
+          <input type="text" id="admin" placeholder="اسم المستخدم" name="admin" required>
+          <input type="password" id="password" placeholder="كلمة السر" name="password" required>
+          <input type="submit" value="دخول" class="login">
         </form>
       </div>
     </div>
@@ -63,6 +73,7 @@
       <button class="add">تعديل</button>
       <button class="delete">حذف</button>
     </div>
+    <button class="admin">دخول كمسؤل</button>
     
       <div class="responsive-table">
         <table>
