@@ -1,5 +1,5 @@
 window.onload = () => {
-  document.querySelector(".load").remove();
+  document.querySelector(".load").style.display="none";
   document.querySelector(".container").style.display = "block";
 }
 
@@ -247,7 +247,7 @@ loginForm.onsubmit = (e) => {
 
 
 if(localStorage.getItem("isAdmin") == "true") {
-  document.querySelector(".container").style.display='flex';
+  document.querySelector(".container").style.display='block';
   adminButton.style.display="none";
 } else {
   document.querySelector(".container .buttons").style.display='none';

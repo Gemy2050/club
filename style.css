@@ -29,9 +29,10 @@ body {
 table {
     border-collapse: collapse;
     width: 100%;
-    min-width: 1000px;
+    min-width: 1100px;
     text-align: center;
     margin-bottom: 7px;
+    background: white;
 }
 caption {
     background-color: #009688;
