@@ -24,14 +24,11 @@ const db = getFirestore(app);
 
 
 // Variables
-let addButton = document.querySelector(".add");
 let popup = document.querySelector(".popup-add");
 let form = document.querySelector(".popup-add form");
 let delForm = document.querySelector(".popup-delete form");
 let tableBody = document.querySelector("table tbody");
-let delButton = document.querySelector(".delete");
 let adminButton = document.querySelector("button.admin")
-let loginButton = document.querySelector(".popup-login .login")
 
 let hoursObj = new Object({});
 
@@ -65,13 +62,14 @@ hours.forEach((hour) => {
 
 
 
+document.addEventListener("click", (e) => {
+  if(e.target.classList.contains("add")) {
+    popup.classList.add("active")
+  } else if(e.target.classList.contains("delete")) {
+    document.querySelector(".popup-delete").classList.add("active")
+  }
+})
 
-addButton.onclick = () => {
-  popup.classList.add("active")
-}
-delButton.onclick = () => {
-  document.querySelector(".popup-delete").classList.add("active")
-}
 adminButton.onclick = () => {
   document.querySelector(".popup-login").classList.add("active")
 }
@@ -85,7 +83,6 @@ document.querySelector(".popup .close-delete").onclick = function() {
 document.querySelector(".popup .close-login").onclick = function() {
   this.parentElement.parentElement.classList.remove("active");
 }
-
 
 
 delForm.onsubmit = (e) => {
@@ -193,12 +190,10 @@ async function getAllDocs(collectionName){
 };
 
 
-
 let tds = document.querySelectorAll("table tbody tr td");
 function getResponse() {
 
   getAllDocs("club").then((arr) => {
-
 
     arr.forEach((el) => {
       tds.forEach((td) => {
@@ -213,6 +208,12 @@ function getResponse() {
 getResponse();
 
 
+
+let innerButtons = `
+<button class="add">تعديل</button>
+<button class="delete">حذف</button>
+`;
+
 getDoc(doc(db, "admin", `admin`)).then((e)=>{
 
 
@@ -226,7 +227,7 @@ loginForm.onsubmit = (e) => {
 
   if(loginForm.admin.value == admin && loginForm.password.value == password) {
     localStorage.setItem("isAdmin", "true");
-    document.querySelector(".container .buttons").style.display='flex';
+    document.querySelector(".container .buttons").innerHTML = innerButtons;
     adminButton.style.display="none";
     document.querySelector(".popup-login").classList.remove("active");
     new swal({
@@ -247,9 +248,6 @@ loginForm.onsubmit = (e) => {
 
 
 if(localStorage.getItem("isAdmin") == "true") {
-  document.querySelector(".container").style.display='block';
+  document.querySelector(".container .buttons").innerHTML = innerButtons;
   adminButton.style.display="none";
-} else {
-  document.querySelector(".container .buttons").style.display='none';
-  adminButton.style.display="block";
 }
