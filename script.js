@@ -1,9 +1,3 @@
-window.onload = () => {
-  document.querySelector(".load").style.display="none";
-  document.querySelector(".container").style.display = "block";
-}
-localStorage.removeItem("isAdmin")
-
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js';
 import { getFirestore, collection, query, where, getDocs,getDoc, setDoc, addDoc, doc,deleteDoc,onSnapshot,orderBy, limit,startAt,endAt } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js';
 
@@ -28,6 +22,8 @@ const db = getFirestore(app);
 let popup = document.querySelector(".popup-add");
 let form = document.querySelector(".popup-add form");
 let delForm = document.querySelector(".popup-delete form");
+let loginForm = document.querySelector(".popup-login form");
+let resetForm = document.querySelector(".popup-reset form");
 let tableBody = document.querySelector("table tbody");
 let adminButton = document.querySelector("button.admin")
 
@@ -68,6 +64,8 @@ document.addEventListener("click", (e) => {
     popup.classList.add("active")
   } else if(e.target.classList.contains("delete")) {
     document.querySelector(".popup-delete").classList.add("active")
+  } else if(e.target.classList.contains("reset")) {
+    document.querySelector(".popup-reset").classList.add("active")
   }
 })
 
@@ -82,6 +80,9 @@ document.querySelector(".popup .close-delete").onclick = function() {
   this.parentElement.parentElement.classList.remove("active");
 }
 document.querySelector(".popup .close-login").onclick = function() {
+  this.parentElement.parentElement.classList.remove("active");
+}
+document.querySelector(".popup .close-reset").onclick = function() {
   this.parentElement.parentElement.classList.remove("active");
 }
 
@@ -122,6 +123,38 @@ form.onsubmit = (e) => {
 
 }
 
+resetForm.onsubmit = (e) => {
+  e.preventDefault();
+
+  if(resetForm.newPass.value == resetForm.confirmPass.value) {
+
+    setDoc(doc(db, "admin", `admin`) , {
+      admin: "admin",
+      password: resetForm.newPass.value,
+    });
+
+    new swal({
+      icon: "success",
+      title: 'تم',
+      showConfirmButton: true,
+      timer: 1500,
+    })
+    document.querySelector(".popup-reset").classList.remove("active");
+    document.querySelector("audio").pause();
+    document.querySelector("audio").currentTime = 0;
+    localStorage.setItem("pass", resetForm.newPass.value);
+  } else {
+    new swal({
+      imageUrl: './angry.jpg',
+      imageWidth: 180,
+      title: 'خخخخخخ الاتنين مش زى بعض',
+      showConfirmButton: true,
+      timer: 1500,
+    });
+    document.querySelector("audio").play();
+  }
+
+}
 
 function addData() {
   hoursObj[`${form.hour.value}`] = form.name.value;
@@ -202,8 +235,10 @@ function getResponse() {
           td.innerHTML = el.hours[td.dataset.hour]
         }
       })
-    })
-})
+    });
+    document.querySelector(".load").style.display="none";
+    document.querySelector(".container").style.display = "block";
+  })
 }
 
 getResponse();
@@ -213,6 +248,7 @@ getResponse();
 let innerButtons = `
 <button class="add">تعديل</button>
 <button class="delete">حذف</button>
+<button class="reset">تغيير كلمه سر</button>
 `;
 
 getDoc(doc(db, "admin", `admin`)).then((e)=>{
@@ -221,7 +257,7 @@ getDoc(doc(db, "admin", `admin`)).then((e)=>{
 let admin = e.data().admin;
 let password = e.data().password;
 
-let loginForm = document.querySelector(".popup-login form");
+
 
 loginForm.onsubmit = (e) => {
   e.preventDefault();
@@ -236,7 +272,7 @@ loginForm.onsubmit = (e) => {
       icon: "success",
       timer: 2500,
 
-    })
+    });
   } else {
     new swal({
       text: "المستخدم غير موجود",
