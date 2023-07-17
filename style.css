@@ -43,23 +43,34 @@ caption {
 table thead {
   background-color:aliceblue;
 }
-  th, td {
-    border: 1px solid #DDD;
-    padding: 8px 5px;
-    min-width: 100px;
-    border-top: transparent;
-  }
-  th.active {
-    background-color: #0075ff;
-    color: white;
-  }
+th, td {
+  border: 1px solid #DDD;
+  padding: 8px 5px;
+  min-width: 100px;
+  border-top: transparent;
+}
+tbody tr {
+  position: relative;
+  min-height: 30px;
+}
+tbody tr th,
+thead tr th:first-child {
+  position: sticky;
+  height: 36px;
+  right: -1px;
+  background-color: #f1f5f9;
+}
+th.active {
+  background-color: #0075ff;
+  color: white;
+}
   
-  th {
-    background-color: transparent;
-    font-weight: bold;
-    color: #009688;
-    font-size: 19px;
-  }
+th {
+  background-color: transparent;
+  font-weight: bold;
+  color: #009688;
+  font-size: 19px;
+}
   
   tr:nth-child(even) {
     background-color: #f2f2f2;

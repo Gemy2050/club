@@ -73,18 +73,11 @@ adminButton.onclick = () => {
   document.querySelector(".popup-login").classList.add("active")
 }
 
-document.querySelector(".popup .close").onclick = function() {
-  this.parentElement.parentElement.classList.remove("active");
-}
-document.querySelector(".popup .close-delete").onclick = function() {
-  this.parentElement.parentElement.classList.remove("active");
-}
-document.querySelector(".popup .close-login").onclick = function() {
-  this.parentElement.parentElement.classList.remove("active");
-}
-document.querySelector(".popup .close-reset").onclick = function() {
-  this.parentElement.parentElement.classList.remove("active");
-}
+document.querySelectorAll(".close").forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    e.target.parentElement.parentElement.classList.remove("active")
+  })
+})
 
 
 delForm.onsubmit = (e) => {
@@ -134,22 +127,24 @@ resetForm.onsubmit = (e) => {
     });
 
     new swal({
-      icon: "success",
-      title: 'تم',
+      imageUrl: './done.png',
+      imageWidth: "180",
+      title: ' فى السليم يا دولى',
       showConfirmButton: true,
-      timer: 1500,
+      timer: 2000,
     })
     document.querySelector(".popup-reset").classList.remove("active");
     document.querySelector("audio").pause();
     document.querySelector("audio").currentTime = 0;
     localStorage.setItem("pass", resetForm.newPass.value);
+    resetForm.reset();
   } else {
     new swal({
       imageUrl: './angry.jpg',
       imageWidth: 180,
       title: 'خخخخخخ الاتنين مش زى بعض',
       showConfirmButton: true,
-      timer: 1500,
+      timer: 2000,
     });
     document.querySelector("audio").play();
   }
