@@ -284,6 +284,8 @@ loginForm.onsubmit = (e) => {
 if(localStorage.getItem("pass") == password) {
   document.querySelector(".container .buttons").innerHTML = innerButtons;
   adminButton.style.display="none";
+} else {
+  localStorage.removeItem("pass");
 }
 
 });
