@@ -2,6 +2,7 @@ window.onload = () => {
   document.querySelector(".load").style.display="none";
   document.querySelector(".container").style.display = "block";
 }
+localStorage.removeItem("isAdmin")
 
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js';
 import { getFirestore, collection, query, where, getDocs,getDoc, setDoc, addDoc, doc,deleteDoc,onSnapshot,orderBy, limit,startAt,endAt } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js';
@@ -226,7 +227,7 @@ loginForm.onsubmit = (e) => {
   e.preventDefault();
 
   if(loginForm.admin.value == admin && loginForm.password.value == password) {
-    localStorage.setItem("isAdmin", "true");
+    localStorage.setItem("pass", password);
     document.querySelector(".container .buttons").innerHTML = innerButtons;
     adminButton.style.display="none";
     document.querySelector(".popup-login").classList.remove("active");
@@ -244,10 +245,9 @@ loginForm.onsubmit = (e) => {
   }
 }
 
-});
-
-
-if(localStorage.getItem("isAdmin") == "true") {
+if(localStorage.getItem("pass") == password) {
   document.querySelector(".container .buttons").innerHTML = innerButtons;
   adminButton.style.display="none";
 }
+
+});
