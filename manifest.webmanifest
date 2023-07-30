@@ -1,0 +1,40 @@
+{
+  "theme_color": "#000",
+  "background_color": "#FFF",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/club/index.html",
+  "name": "ملعب ابوكريمه",
+  "short_name": "Club",
+  "description": "Abo Krima Club",
+  
+  "icons": [
+      {
+          "src": "./logo.jpg",
+          "sizes": "192x192",
+          "type": "image/png"
+      },
+      {
+          "src": "./logo.jpg",
+          "sizes": "256x256",
+          "type": "image/png"
+      },
+      {
+          "src": "./logo.jpg",
+          "sizes": "384x384",
+          "type": "image/png"
+      },
+      {
+          "src": "./logo.jpg",
+          "sizes": "512x512",
+          "type": "image/png"
+      }
+  ],
+  "shortcuts":[
+      {
+          "name": "The Club",
+          "url":"/",
+          "icon":"./logo.jpg"
+      }
+  ]
+}
