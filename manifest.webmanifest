@@ -3,7 +3,7 @@
   "background_color": "#FFF",
   "display": "standalone",
   "scope": "/",
-  "start_url": "/index.html",
+  "start_url": "/club/index.html",
   "name": "Youtube App",
   "short_name": "Club",
   "description": "Abo Krima Club",
