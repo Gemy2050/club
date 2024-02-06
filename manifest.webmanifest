@@ -1,6 +1,6 @@
 {
   "theme_color": "#000",
-  "background_color": "#FFF",
+  "background_color": "#009688",
   "display": "standalone",
   "scope": "/",
   "start_url": "/club/index.html",
